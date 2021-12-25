@@ -1,0 +1,464 @@
+@import "./variable";
+@import "./reset";
+@import "./mixin";
+
+.header {
+    min-height: 80vh;
+    background-image: url("../images/desktop/image-header.jpg");
+    background-position: center bottom;
+    background-size: cover;
+
+    @include mobile() {
+        background-image: url("../images/mobile/image-header.jpg");
+    }
+}
+
+.nav {
+    padding: 1.5rem 1rem;
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &Toggle {
+        display: none;
+
+        & ~ label {
+            display: none;
+        }
+    }
+
+    &Links {
+        list-style: none;
+        display: flex;
+    }
+
+    &Link {
+        padding: 0.6em 1.5em;
+        display: block;
+        font-weight: 500;
+        text-decoration: none;
+        color: $white;
+        border-radius: 2em;
+
+        &Contact {
+            font-family: "Fraunces";
+            font-weight: 700;
+            background-color: $white;
+            color: $veryDarkDesaturatedBlue;
+
+            &:hover {
+                background-color: rgba($white, 0.5);
+                color: $white;
+            }
+        }
+    }
+
+    @include mobile() {
+        &Toggle {
+            & ~ label {
+                display: block;
+            }
+
+            &:checked ~ .navLinks {
+                display: flex;
+            }
+
+            &:checked ~ label {
+                opacity: 0.75;
+            }
+        }
+
+        &Links {
+            display: none;
+            width: calc(100% - 2rem);
+            margin: 1rem;
+            padding: 1rem;
+            position: absolute;
+            align-items: center;
+            justify-content: center;
+            top: 100%;
+            left: 0;
+            flex-direction: column;
+            background-color: $white;
+
+            &::before {
+                width: 2rem;
+                height: 2rem;
+                content: "";
+                position: absolute;
+                right: 0;
+                top: -2rem;
+                background-color: $white;
+            }
+        }
+
+        &Link {
+            margin: 0.25rem 0;
+            color: $veryDarkGrayishBlue;
+
+            &Contact {
+                background-color: $yellow;
+                color: $veryDarkDesaturatedBlue;
+
+                &:hover {
+                    background-color: $yellow;
+                    color: $veryDarkDesaturatedBlue;
+                }
+            }
+        }
+    }
+}
+
+.hero {
+    margin-top: 7rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    h1 {
+        font-size: 3rem;
+        font-family: "Fraunces";
+        font-weight: 900;
+        text-transform: uppercase;
+        color: $white;
+    }
+
+    img {
+        margin-top: 4rem;
+    }
+
+    @include mobile() {
+        margin: 0 1rem;
+        margin-top: 10rem;
+        text-align: center;
+    }
+}
+
+.feature {
+    display: grid;
+    grid-template: repeat(3, 500px) / 1fr;
+
+    &Item {
+        display: grid;
+        grid-template: 1fr / repeat(2, 1fr);
+        grid-template-areas: "left right";
+
+        &Sub {
+            .featureTxt {
+                height: 100%;
+                text-align: center;
+                justify-content: flex-end;
+            }
+        }
+    }
+
+    &Txt {
+        padding: 2rem 4rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        h1 {
+            margin: 0 auto;
+            font-family: "Fraunces";
+            max-width: 20ch;
+            font-size: 2rem;
+            font-weight: 900;
+        }
+        p {
+            max-width: 40ch;
+            margin: 1.5rem auto;
+        }
+
+        a {
+            display: block;
+            margin: 0 auto;
+            padding: 0.25rem 0.5rem;
+            position: relative;
+            font-family: "Fraunces";
+            font-size: 1.2rem;
+            font-weight: 900;
+            text-decoration: none;
+            color: $veryDarkDesaturatedBlue;
+            text-transform: uppercase;
+
+            &::after {
+                width: 100%;
+                height: 50%;
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: -1;
+                border-radius: 1rem;
+            }
+        }
+    }
+
+    &Img {
+        background-size: cover;
+        background-position: center;
+    }
+
+    &One {
+        .featureTxt {
+            grid-area: left;
+        }
+        a::after {
+            background-color: rgba($yellow, 0.5);
+        }
+        .featureImg {
+            grid-area: right;
+            background-image: url("../images/desktop/image-transform.jpg");
+        }
+    }
+
+    &Two {
+        .featureTxt {
+            grid-area: right;
+        }
+        a::after {
+            background-color: rgba($softRed, 0.5);
+        }
+        .featureImg {
+            grid-area: left;
+            background-image: url("../images/desktop/image-stand-out.jpg");
+        }
+    }
+
+    &Three {
+        @extend .featureImg;
+
+        background-image: url("../images/desktop/image-graphic-design.jpg");
+    }
+
+    &Four {
+        @extend .featureImg;
+
+        background-image: url("../images/desktop/image-photography.jpg");
+    }
+
+    @include mobile() {
+        grid-template: repeat(3, auto) / 1fr;
+
+        &Item {
+            grid-template: 300px 500px / 1fr;
+            grid-template-areas: "left" "right";
+
+            &:last-child {
+                grid-template: 600px 600px / 1fr;
+            }
+        }
+
+        &Txt {
+            text-align: center;
+
+            a {
+                margin: 0 auto;
+            }
+        }
+
+        &One,
+        &Two {
+            .featureTxt {
+                grid-area: right;
+            }
+            .featureImg {
+                grid-area: left;
+            }
+        }
+
+        &One .featureImg {
+            background-image: url("../images/mobile/image-transform.jpg");
+        }
+
+        &Two .featureImg {
+            background-image: url("../images/mobile/image-stand-out.jpg");
+        }
+
+        &Three {
+            background-image: url("../images/mobile/image-graphic-design.jpg");
+        }
+
+        &Four {
+            background-image: url("../images/mobile/image-photography.jpg");
+        }
+    }
+}
+
+.testimonial {
+    margin: 10rem auto;
+    width: 90%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    &Title {
+        color: $veryDarkGrayishBlue;
+    }
+
+    &Hold {
+        width: 90%;
+        margin-top: 4rem;
+        display: grid;
+        grid-gap: 2rem;
+        grid-template: 1fr / repeat(3, 1fr);
+    }
+
+    &Card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        img {
+            width: 3.5rem;
+            height: 3.5rem;
+            border-radius: 3.5rem;
+        }
+        p {
+            margin: 3rem 0;
+            max-width: 35ch;
+            font-size: 1rem;
+            font-weight: 600;
+            line-height: 1.75em;
+            color: rgba($veryDarkDesaturatedBlue, 0.8);
+            line-height: 1.5em;
+        }
+
+        &User {
+            h2 {
+                font-family: "Fraunces";
+                font-size: 1rem;
+                font-weight: 900;
+                color: $veryDarkDesaturatedBlue;
+            }
+
+            p {
+                margin: 0;
+                max-width: auto;
+                font-size: 0.8rem;
+                font-weight: 400;
+                line-height: 2.5em;
+                color: $grayishBlue;
+            }
+        }
+    }
+
+    @include mobile() {
+        &Hold {
+            grid-template: repeat(3, 1fr) / 1fr;
+        }
+
+        &Card {
+            margin-bottom: 1rem;
+            &:last-child {
+                margin-bottom: 0;
+            }
+            p {
+                margin: 1.5rem 0;
+            }
+
+            &User p {
+                margin: 0;
+            }
+        }
+    }
+}
+
+.gallery {
+    display: grid;
+    grid-template: 400px / repeat(4, 1fr);
+
+    &Img {
+        background-size: cover;
+        background-position: center;
+    }
+
+    &Milk {
+        @extend .galleryImg;
+
+        background-image: url("../images/desktop/image-gallery-milkbottles.jpg");
+    }
+    &Orange {
+        @extend .galleryImg;
+
+        background-image: url("../images/desktop/image-gallery-orange.jpg");
+    }
+    &Cone {
+        @extend .galleryImg;
+
+        background-image: url("../images/desktop/image-gallery-cone.jpg");
+    }
+    &Sugar {
+        @extend .galleryImg;
+
+        background-image: url("../images/desktop/image-gallery-sugarcubes.jpg");
+    }
+
+    @include mobile() {
+        height: 500px;
+        grid-template: repeat(2, 1fr) / repeat(2, 1fr);
+
+        &Milk {
+            background-image: url("../images/mobile/image-gallery-milkbottles.jpg");
+        }
+        &Orange {
+            background-image: url("../images/mobile/image-gallery-orange.jpg");
+        }
+        &Cone {
+            background-image: url("../images/mobile/image-gallery-cone.jpg");
+        }
+        &Sugar {
+            background-image: url("../images/mobile/image-gallery-sugar-cubes.jpg");
+        }
+    }
+}
+
+.footer {
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba($darkModerateCyan, 0.5);
+
+    &Nav {
+        margin: 2rem 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &Link {
+            padding: 0 2rem;
+            text-decoration: none;
+            color: $darkDesaturatedCyan;
+
+            &:hover {
+                color: $white;
+            }
+        }
+    }
+
+    &Links {
+        margin-top: 3rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    &Link {
+        padding: 0 1rem;
+        text-decoration: none;
+        color: $darkDesaturatedCyan;
+
+        &:hover {
+            color: $white;
+            transform: scale(1.1);
+        }
+    }
+}
